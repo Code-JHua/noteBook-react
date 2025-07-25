@@ -3,14 +3,19 @@ import style from './index.module.less'
 import avatar from '../../assets/img/avatar.png'
 import { Button, Input, Form, Toast } from 'react-vant'
 import axios from '../../api'
+import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
+  const navigate = useNavigate()
   const [form] = Form.useForm()
   const onFinish = values => {
     console.log(values)
     axios.post('/user/login', values).then(res => {
       console.log(res);
+      localStorage.setItem('access_token', res.access_token)
+      localStorage.setItem('refresh_token', res.refresh_token)
       Toast.success('登录成功')
+      navigate('/noteClass')
     })
   }
 

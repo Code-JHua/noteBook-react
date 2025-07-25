@@ -1,8 +1,11 @@
 import React, { Suspense } from 'react'
 import { BrowserRouter, Navigate, useRoutes } from 'react-router'
+import NoteClass from '../pages/NoteClass'
 
 export default function Router() {
-  const Login = React.lazy(() => import('../pages/Login'))
+  // 路由懒加载
+  const Login = React.lazy(() => import('../pages/login'))
+
   function WrapperRoutes() {
     const routes = [
       {
@@ -10,10 +13,18 @@ export default function Router() {
         element: <Navigate to='/noteClass' />
       },
       {
-        path: '/Login',
+        path: '/login',
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<div style={{textAlign:'center'}}>Loading...</div>}>
             <Login />
+          </Suspense>
+        )
+      },
+      {
+        path: '/noteClass',
+        element: (
+          <Suspense fallback={<div style={{textAlign:'center'}}>Loading...</div>}>
+            <NoteClass />
           </Suspense>
         )
       }

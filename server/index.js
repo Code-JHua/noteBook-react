@@ -11,7 +11,11 @@ const { bodyParser } = require('@koa/bodyparser')
 //   }
 // })
 app.use(cors()) // 告诉浏览器, 允许前端跨域请求
+
 app.use(bodyParser()) // 辅助 koa 解析请求体中的数据
+
+// 1.被 app.use 调用的函数中一定拥有 ctx, next 参数
+// 2.useRouter.routes()
 app.use(userRouter.routes()).use(userRouter.allowedMethods())
 app.listen(3000, () => {
   console.log('server is running at http://localhost:3000')
