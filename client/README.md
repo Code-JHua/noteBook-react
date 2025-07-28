@@ -15,6 +15,17 @@ sass   npm i sass --save
 # html 标签重置样式
 rest.css
 
+# 路由传参
+  1. navigate('/home?id=1')  useSearchParams() // 获取当前路由的参数
+
+  2. navigate('/home/1')     配置路由时 :id 表示路由参数, useParams() // 获取当前路由参数
+
+  3. navigate('/home', {     useLocation()和第一种写法一样,但是好处是不会在 url 中显示参数
+    state: {
+      id: 1
+    }
+  })
+
 # 项目梳理
 - 安装路由 react-router-dom
 

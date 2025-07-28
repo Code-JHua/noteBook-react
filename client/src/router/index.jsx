@@ -1,10 +1,12 @@
 import React, { Suspense } from 'react'
 import { BrowserRouter, Navigate, useRoutes } from 'react-router'
-import NoteClass from '../pages/NoteClass'
 
 export default function Router() {
   // 路由懒加载
-  const Login = React.lazy(() => import('../pages/login'))
+  const Login = React.lazy(() => import('../pages/Login'))
+  const Register = React.lazy(() => import('../pages/Register'))
+  const NoteClass = React.lazy(() => import('../pages/NoteClass'))
+  const NoteList = React.lazy(() => import('../pages/NoteList'))
 
   function WrapperRoutes() {
     const routes = [
@@ -25,6 +27,22 @@ export default function Router() {
         element: (
           <Suspense fallback={<div style={{textAlign:'center'}}>Loading...</div>}>
             <NoteClass />
+          </Suspense>
+        )
+      },
+      {
+        path: '/register',
+        element: (
+          <Suspense fallback={<div style={{textAlign:'center'}}>Loading...</div>}>
+            <Register />
+          </Suspense>
+        )
+      },
+      {
+        path: '/noteList/:category',
+        element: (
+          <Suspense fallback={<div style={{textAlign:'center'}}>Loading...</div>}>
+            <NoteList />
           </Suspense>
         )
       }

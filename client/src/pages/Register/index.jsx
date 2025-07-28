@@ -3,35 +3,24 @@ import style from './index.module.less'
 import avatar from '../../assets/img/avatar.png'
 import { Button, Input, Form, Toast } from 'react-vant'
 import axios from '../../api'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-export default function Login() {
+export default function Register() {
   const navigate = useNavigate()
   const [form] = Form.useForm()
-  const location = useLocation()
-  const { state } = location
-
-  // if (state) {// 登录成功后，从注册页跳转到登录页，登录页会自动填写用户名和密码
-  //   form.setFieldsValue(state)
-  // }
-
   const onFinish = values => {
     // console.log(values)
-    axios.post('/user/login', values).then(res => {
-      console.log(res);
-      localStorage.setItem('access_token', res.access_token)
-      localStorage.setItem('refresh_token', res.refresh_token)
-      localStorage.setItem('user', JSON.stringify(res.data))
-      Toast.success('登录成功')
-      navigate('/noteClass')
-    })
+    const res = axios.post('/user/register', values)
+      Toast.success('注册成功,快去登录吧')
+      setTimeout(() => {
+        navigate('/login?', {state: {username: values.username, password: values.password}})
+      }, 1000)
   }
 
-
   return (
-    <div className={`${style.login} animate__animated animate__zoomIn`}>
-      <h1 className={style.title}>登录</h1>
-      <div className={style['login-wrapper']}>
+    <div className={`${style.register} animate__animated animate__zoomIn`}>
+      <h1 className={style.title}>注册</h1>
+      <div className={style['register-wrapper']}>
         <div className={style.avatar}>
           <img width="100%" height="100%" src={avatar} alt="" />
         </div>
@@ -41,7 +30,7 @@ export default function Login() {
           footer={
             <div style={{ margin: '20px 16px 0' }}>
               <Button round nativeType='submit' type='primary' block>
-                登录
+                注册
               </Button>
             </div>
           }
@@ -51,7 +40,6 @@ export default function Login() {
             name='username'
             label='用户名'
             labelWidth={50}
-            initialValue={state?.username}
           >
             <Input placeholder='请输入用户名' />
           </Form.Item>
@@ -60,14 +48,21 @@ export default function Login() {
             name='password'
             label='密码'
             labelWidth={50}
-            initialValue={state?.password}
           >
             <Input placeholder='请输入密码' />
           </Form.Item>
+          <Form.Item
+            rules={[{ required: true, message: '请填写昵称' }]}
+            name='nickname'
+            label='昵称'
+            labelWidth={50}
+          >
+            <Input placeholder='请输入昵称' />
+          </Form.Item>
         </Form>
       </div>
-      <p className={style['login-tip']} onClick={() => navigate('/register')}>
-        没有账号？<span>去注册</span>
+      <p className={style['register-tip']} onClick={() => navigate('/login')}>
+        有账号？<span>去登录</span>
       </p>
     </div>
   )

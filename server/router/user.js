@@ -1,18 +1,20 @@
 const Router = require('@koa/router')
 const router = new Router()
-const { userLogin } = require('../controllers/index.js')
+const { userLogin, findUser, userRegister } = require('../controllers/index.js')
 const { sign, verify, refreshVerify } = require('../utils/jwt.js')
+const { escape } = require('../utils/securtiy.js')
 
 router.prefix('/user')  // 所有的路由都要以 /user 开头
 
 router.post('/login', async (ctx) => {
   // 1. 获取请求体中的账号密码
   // post 请求携带的参数都在请求体中
-  const { username, password } = ctx.request.body
-  // console.log(username, password);
+  let { username, password } = ctx.request.body
+  //注册时对账号密码进行了转义, 登录时需要对账号密码再进行转义
+  username = escape(username)
+  password = escape(password)
   // 2. 检验账号密码是否合法
   // 去数据库查询账号密码是否正确
-
   try {
     const res = await userLogin(username, password)
     if (res.length) {  // 找到了有数据
@@ -78,6 +80,63 @@ router.post('/refresh', (ctx) => {
     ctx.body = {
       code: '0',
       msg: '登录失效，请重新登录'
+    }
+  }
+})
+
+// 注册
+router.post('/register', async (ctx) => {
+  let { username, password, nickname } = ctx.request.body
+  // 校验是否为空
+  if (!username || !password || !nickname) {
+    ctx.body = {
+      code: '0',
+      msg: '账号、密码、昵称不能为空',
+      data: {}
+    }
+    return
+  }
+
+  // 1. 转义标签, 防止 sql 注入
+  username = escape(username)
+  password = escape(password)
+  nickname = escape(nickname)
+  
+  try {
+    // 1. 校验账号密码是否合法
+    // if (username.length < 6 || password.length < 6) {
+    //   ctx.body = {
+    //     code: '0',
+    //     msg: '账号或密码长度不能小于6位',
+    //     data: {}
+    //   }
+    //   return
+    // }
+    // 2. 校验账号是否已存在
+    const res = await findUser(username)
+    if (res.length) {
+      ctx.body = {
+        code: '0',
+        msg: '账号已存在',
+        data: {}
+      }
+      return
+    }
+    // 3. 注册成功, 数据库写入
+    const create_time = new Date().getTime()
+    const registerRes = await userRegister(username, password, nickname, create_time)
+    if (registerRes) {
+      ctx.body = {
+        code: '1',
+        msg: '注册成功',
+        data: {}
+      }
+    }
+  }catch(error) {
+    ctx.body = {
+      code: '-1',
+      msg: '服务器异常',
+      data: error
     }
   }
 })
