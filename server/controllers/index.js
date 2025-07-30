@@ -58,10 +58,18 @@ const findNoteDetailById = (id) => {
   return allServices.query(_sql)
 }
 
+// 发布笔记
+const publishNote = (options) => {
+  const { note_title, note_content, note_img, note_type, userId, create_time, update_time } = options
+  let _sql = `insert into note (note_title, note_content, note_img, note_type, user_id, create_time, update_time) values ('${note_title}', '${note_content}', '${note_img}', '${note_type}', '${userId}', '${create_time}', '${update_time}')`
+  return allServices.query(_sql)
+}
+
 module.exports = {
   userLogin,
   findUser,
   userRegister,
   findNoteListByType,
-  findNoteDetailById
+  findNoteDetailById,
+  publishNote
 }

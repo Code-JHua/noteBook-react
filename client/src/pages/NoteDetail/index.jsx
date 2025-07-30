@@ -31,7 +31,7 @@ export default function NoteDetail() {
           <span className={styles['author']}>作者：{user.nickname}</span>
         </div>
         <p className={styles['title']}>{noteDetail.note_title}</p>
-        <div className={styles['content']}>{noteDetail.note_content}</div>
+        <div className={styles['content']} dangerouslySetInnerHTML={{ __html: noteDetail.note_content }}></div>
       </div>
     </div>
   )

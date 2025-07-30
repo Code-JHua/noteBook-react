@@ -62,6 +62,8 @@ function sign(options, time) {
 }
 
 function verify() {
+  console.log('verify');
+  
   return async (ctx, next) => {
     const token = ctx.headers.authorization
     if (token) {

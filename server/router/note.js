@@ -1,6 +1,6 @@
 const Router = require('@koa/router')
 const { verify } = require('../utils/jwt.js')
-const { findNoteListByType, findNoteDetailById } = require('../controllers/index.js')
+const { findNoteListByType, findNoteDetailById, publishNote } = require('../controllers/index.js')
 
 const router = new Router()
 
@@ -48,16 +48,48 @@ router.get('/findNoteDetailById', verify(), async (ctx) => {
     } else {
       ctx.body = {
         code: '0',
-        msg: '暂无数据',
+        msg: '查询失败, 未找到该笔记',
         data: []
       }
     }
   } catch (error) {
     ctx.body = {
       code: '-1',
-      msg: '查询失败',
+      msg: '服务器异常',
       data: []
     }
   }
 })
+
+router.post('/note-publish', verify(), async (ctx) => {
+  const { note_title, note_content, note_img, note_type } = ctx.request.body
+  
+  const { userId } = ctx
+  try {
+    const res = await publishNote({
+      note_title,
+      note_content,
+      note_img,
+      note_type,
+      userId,
+      create_time: new Date().getTime(),
+      update_time: new Date().getTime()
+    })
+    console.log(res);
+    if (res) {
+      ctx.body = {
+        code: '1',
+        msg: '发布成功',
+        data: []
+      }
+    }
+  } catch (error) { 
+    ctx.body = {
+      code: '-1',
+      msg: '发布失败',
+      data: []
+    }
+  }
+})
+
 module.exports = router

@@ -8,6 +8,7 @@ export default function Router() {
   const NoteClass = React.lazy(() => import('../pages/NoteClass'))
   const NoteList = React.lazy(() => import('../pages/NoteList'))
   const NoteDetail = React.lazy(() => import('../pages/NoteDetail'))
+  const NotePublish = React.lazy(() => import('../pages/NotePublish'))
 
   function WrapperRoutes() {
     const routes = [
@@ -52,6 +53,14 @@ export default function Router() {
         element: (
           <Suspense fallback={<div style={{textAlign:'center'}}>Loading...</div>}>
             <NoteDetail />
+          </Suspense>
+        )
+      },
+      {
+        path: '/notePublish',
+        element: (
+          <Suspense fallback={<div style={{textAlign:'center'}}>Loading...</div>}>
+            <NotePublish />
           </Suspense>
         )
       }

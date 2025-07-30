@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Toast } from 'react-vant'
 
-axios.defaults.baseURL = 'http://localhost:3000'
+axios.defaults.baseURL = 'http://121.40.240.221:3000'
 // 告诉浏览器，如果发送的是 post请求，那么后端一定会返回 json 格式的数据，让浏览器以解析 json 的方式来解析响应提体
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 
