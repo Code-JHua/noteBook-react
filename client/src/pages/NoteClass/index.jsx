@@ -8,9 +8,9 @@ import { useNavigate } from 'react-router-dom'
 
 export default function NoteClass() {
 
-  axios.get('/user/test').then(res => {
-    console.log(res);
-  })
+  // axios.get('/user/test').then(res => {
+  //   console.log(res);
+  // })
 
   const navigate = useNavigate()
   const [showMenu, setShowMenu] = useState(false)

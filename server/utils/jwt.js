@@ -70,6 +70,9 @@ function verify() {
         const decoded = jwt.verify(token, '666')
         // console.log(decoded);
         if (decoded.id) { // 合法
+          ctx.userId = decoded.id
+          // console.log(ctx.userId);
+          
           await next()
         }
       } catch (error) {
@@ -94,6 +97,7 @@ function refreshVerify(token) {
   try {
     const decoded = jwt.verify(token, '666')
     if (decoded.id) {
+      
       return decoded
     }
   } catch (error) {

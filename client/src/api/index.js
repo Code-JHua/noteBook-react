@@ -24,6 +24,10 @@ axios.interceptors.response.use(
     if (response.status == 200) {
 
       if (response.data.code !== '1') {  // 逻辑性错误
+        console.log('被拦截');
+        console.log(response.data);
+        
+        
         Toast.fail(response.data.msg);
         return Promise.reject(response)
       }

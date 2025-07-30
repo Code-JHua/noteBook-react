@@ -20,7 +20,7 @@ rest.css
 
   2. navigate('/home/1')     配置路由时 :id 表示路由参数, useParams() // 获取当前路由参数
 
-  3. navigate('/home', {     useLocation()和第一种写法一样,但是好处是不会在 url 中显示参数
+  3. navigate('/home', {     useLocation() 和第一种写法一样,但是好处是不会在 url 中显示参数
     state: {
       id: 1
     }
@@ -51,3 +51,9 @@ rest.css
   - 以上功能实现了鉴权, 但是 token 在规定时间后会失效, 过期后需要重新登录, 体验很差.
   实现一个无感刷新 token 的效果:
     - 后端在登录节后返回一个长 token, 和一个短 token. 短 token 用来做鉴权, 长 token 用来刷新短 token 和 长 token
+
+5. 首页 noteClass
+  切页面
+
+6. 列表页 noteList
+  - 手动封装下拉刷新组件, 下拉组件中监听手指的 touch 事件, 根据手指在 Y 轴移动距离来控制容器向下平移的距离, 从而展示出头部的 下拉刷新 字样, 当用户松开手指时, 如果移动距离大于 75px, 则触发下拉刷新事件, 否则不触发下拉刷新事件
