@@ -1,13 +1,13 @@
-import React from 'react'
-import { Button } from 'react-vant'
-import Router from './router'
+import WrapperRouter from './Router'
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function App() {
-  
-  
+
   return (
     <>
-      <Router />
+      <WrapperRouter />
+      <Toaster />
     </>
   )
+  
 }

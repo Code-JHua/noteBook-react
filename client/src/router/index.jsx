@@ -1,78 +1,80 @@
+import { BrowserRouter, Routes, Route, Navigate, useRoutes } from 'react-router-dom'
 import React, { Suspense } from 'react'
-import { BrowserRouter, Navigate, useRoutes } from 'react-router'
 
-export default function Router() {
-  // 路由懒加载
-  const Login = React.lazy(() => import('../pages/Login'))
-  const Register = React.lazy(() => import('../pages/Register'))
-  const NoteClass = React.lazy(() => import('../pages/NoteClass'))
-  const NoteList = React.lazy(() => import('../pages/NoteList'))
-  const NoteDetail = React.lazy(() => import('../pages/NoteDetail'))
-  const NotePublish = React.lazy(() => import('../pages/NotePublish'))
+// 路由懒加载
+const Login = React.lazy(() => import('../pages/Login'))
+const NoteClass = React.lazy(() => import('../pages/NoteClass'))
+const Register = React.lazy(() => import('../pages/Register'))
+const NoteList = React.lazy(() => import('../pages/NoteList'))
+const NoteDetail = React.lazy(() => import('../pages/NoteDetail'))
+const NotePublic = React.lazy(() => import('../pages/NotePublic'))
+const Search = React.lazy(() => import('../pages/Search'))
+const NoteEdit = React.lazy(() => import('../pages/NoteEdit'))
+const NoteLike = React.lazy(() => import('../pages/NoteLike'))
+const NoteStatistics = React.lazy(() => import('../pages/NoteStatistics'))
+const Personal = React.lazy(() => import('../pages/Personal'))
 
-  function WrapperRoutes() {
-    const routes = [
-      {
+const routes = [
+    {
         path: '/',
-        element: <Navigate to='/noteClass' />
-      },
-      {
+        element: <Navigate to="/noteClass" />
+    },
+    {
         path: '/login',
-        element: (
-          <Suspense fallback={<div style={{textAlign:'center'}}>Loading...</div>}>
-            <Login />
-          </Suspense>
-        )
-      },
-      {
-        path: '/noteClass',
-        element: (
-          <Suspense fallback={<div style={{textAlign:'center'}}>Loading...</div>}>
-            <NoteClass />
-          </Suspense>
-        )
-      },
-      {
+        element: <Login />
+    },
+    {
         path: '/register',
-        element: (
-          <Suspense fallback={<div style={{textAlign:'center'}}>Loading...</div>}>
-            <Register />
-          </Suspense>
-        )
-      },
-      {
-        path: '/noteList/:category',
-        element: (
-          <Suspense fallback={<div style={{textAlign:'center'}}>Loading...</div>}>
-            <NoteList />
-          </Suspense>
-        )
-      },
-      {
-        path: '/noteDetail/:id',
-        element: (
-          <Suspense fallback={<div style={{textAlign:'center'}}>Loading...</div>}>
-            <NoteDetail />
-          </Suspense>
-        )
-      },
-      {
-        path: '/notePublish',
-        element: (
-          <Suspense fallback={<div style={{textAlign:'center'}}>Loading...</div>}>
-            <NotePublish />
-          </Suspense>
-        )
-      }
-    ]
-    return useRoutes(routes)
-  }
+        element: <Register />
+    },
+    {
+        path: '/noteClass',
+        element: <NoteClass />
+    },
+    {
+        path: '/noteList',
+        element: <NoteList />
+    },
+    {
+        path: '/noteDetail',
+        element: <NoteDetail />
+    },
+    {
+        path: '/notePublic',
+        element: <NotePublic />
+    },
+    {
+        path: '/search',
+        element: <Search />
+    },
+    {
+        path: '/noteEdit',
+        element: <NoteEdit />
+    },
+    {
+        path: '/noteLike',
+        element: <NoteLike />
+    },
+    {
+        path: '/noteStatistics',
+        element: <NoteStatistics />
+    },
+    {
+        path: '/personal',
+        element: <Personal />
+    },
+]
 
-  return (
-    // 声明路由模式 
-    <BrowserRouter>
-      {/* 路由出口,所有路由组件最终都会渲染到出口位置 */}
-      <WrapperRoutes />
-    </BrowserRouter>
-  )
+function WrapperRoutes() {
+    // useRoutes 这个 hook 函数只能用在路由组件中, 也就是说, 该组件不能被抛出
+    let ele = useRoutes(routes) // <Routes></Routes>
+    return <Suspense fallback={<div>Loading...</div>}>{ele}</Suspense>
+}
+
+export default function WrapperRouter() {
+    return (
+        <BrowserRouter>
+            <WrapperRoutes />
+        </BrowserRouter>
+    )
 }

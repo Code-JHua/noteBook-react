@@ -1,45 +1,63 @@
-.note-detail {
+.note-detail{
   position: relative;
-
-  .back {
+  .back{
     position: absolute;
-    top: 0.5333rem;
-    left: 0.5333rem;
+    top: 0.3rem;
+    left: 0.3rem;
   }
-
-  .note-img {
+  .not-collect{
+    position: absolute;
+    top: 0.3rem;
+    right: 0.3rem;
+    font-size: 0.55rem;
+    color: rgba(227, 221, 221, 0.8);
+  }
+  .collect{
+    position: absolute;
+    top: 0.3rem;
+    right: 0.3rem;
+    font-size: 0.55rem;
+    color: rgb(241, 50, 50, 0.8);
+  }
+  .note-edit{
+    position: absolute;
+    top: 0.3rem;
+    right: 1rem;
+    font-size: 0.6rem;
+  }
+  .note-delete{
+    position: absolute;
+    top: 0.3rem;
+    right: 1.7rem;
+    font-size: 0.6rem;
+  }
+  .note-img{
     width: 100%;
     height: 5rem;
     overflow: hidden;
-
-    img {
+    img{
       width: 100%;
     }
   }
-
-  .note-content {
+  .note-content{
     padding: 0.667rem;
-
-    .tab {
+    .tab{
       display: flex;
       justify-content: space-between;
       font-size: 0.48rem;
       color: rgba(16, 16, 16, 0.7);
-
-      span {
+      span{
         padding-bottom: 4px;
         border-bottom: 2px solid #e51c25;
       }
     }
-
-    .title {
+    .title{
       margin: 0.5333rem 0;
       line-height: 1.3;
       color: rgba(16, 16, 16, 1);
       font-size: 0.8rem;
     }
-
-    .content {
+    .content{
       line-height: 1.5;
       color: rgba(16, 16, 16, 1);
       font-size: 0.37333rem;
